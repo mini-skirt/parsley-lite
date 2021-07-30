@@ -5,6 +5,13 @@
         <meta charset="{{ _.charset|default('utf-8') }}" />
         <title>{{ _.title|default('') }}</title>
         <link rel="stylesheet" type="text/css" href="/src/css/parsley-lite.css" />
+        {% if og is defined %}
+            <meta property="og:title" content="{{ og.title|default(_.title|default('')) }}" /> 
+            <meta property="og:type" content="{{ og.type|default('website'） }}" />
+            {% if og.description is defined %}<meta property="og:description" content="{{ og.description }}" />{% endif %}
+            {% if og.url is defined %}<meta property="og:url" content="{{ og.url }}" />{% endif %}
+            {% if og.image is defined %}<meta property="og:image" content="{{ og.image }}" />{% endif %}
+        {% endif %}
     {% endblock %}
     </head>
     <body>
