@@ -6,16 +6,20 @@ Schema
 
 _:
  lang
+   document language
    omit if not defined
  charset
+   document charset
    default 'utf-8'
  title
+   document title
    default ''
  favicon
+   ico format "shotcut icon"
    default '/favicon.ico'
  icon
+   high definition icon and apple-touch-icon
    omit if not defined
-   used for high definition icon and apple-touch-icon
 og: 
  title
    default _.title
@@ -29,22 +33,36 @@ og:
    omit if not defined
 
 
-#}<!DOCTYPE html>
+#}
+{% if template is not defined %}
+{% set template = [] %}
+{% endif %}
+{% if template.style is not defined %}
+{% set template.style = '/src/css/parsley-lite.css' %}
+{% endif %}
+<!DOCTYPE html>
 <html{% if _.lang is defined %} lang="{{ _.lang }}"{% endif %}>
     <head>
     {% block head %}
+        <meta http-equiv="content-type" content="text/html; charset={{ _.charset|default('utf-8') }}" />
         <meta charset="{{ _.charset|default('utf-8') }}" />
         <title>{{ _.title|default('') }}</title>
-        <link rel="stylesheet" type="text/css" href="/src/css/parsley-lite.css" />
+        <link rel="stylesheet" type="text/css" href="{{ template.style|default('') }}" />
+        <script src="{{ template.script|default('') }}"></script>
         <link rel="icon" type="image/x-icon" href="{{ _.favicon|default('/favicon.ico') }}" />
         {% if _.icon is defined %}
             <link rel="icon" type="image/png" href="{{ _.icon }}" />
             <link rel="apple-touch-icon" href="{{ _.icon }}" />
         {% endif %}
+        {% if _.description %}<meta name="description" content="{{ _.description }}" />
         {% if og is defined %}
             <meta property="og:title" content="{{ og.title|default(_.title|default('')) }}" /> 
             <meta property="og:type" content="{{ og.type|default('website'） }}" />
-            {% if og.description is defined %}<meta property="og:description" content="{{ og.description }}" />{% endif %}
+            {% if og.description is defined %}
+              <meta property="og:description" content="{{ og.description }}" />
+              {% else %}
+              {% if _.description is defined %}<meta property="og:description" content="{{ _.description }}" />{% endif %}
+            {% endif %}
             {% if og.url is defined %}<meta property="og:url" content="{{ og.url }}" />{% endif %}
             {% if og.image is defined %}<meta property="og:image" content="{{ og.image }}" />{% endif %}
         {% endif %}
