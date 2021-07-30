@@ -1,10 +1,46 @@
-<!DOCTYPE html>
+{#
+
+Base template for Parsley Lite project
+
+Schema
+
+_:
+ lang
+   omit if not defined
+ charset
+   default 'utf-8'
+ title
+   default ''
+ favicon
+   default '/favicon.ico'
+ icon
+   omit if not defined
+   used for high definition icon and apple-touch-icon
+og: 
+ title
+   default _.title
+ type
+   default 'website'
+ description
+   omit if not defined
+ url
+   omit if not defined
+ image
+   omit if not defined
+
+
+#}<!DOCTYPE html>
 <html{% if _.lang is defined %} lang="{{ _.lang }}"{% endif %}>
     <head>
     {% block head %}
         <meta charset="{{ _.charset|default('utf-8') }}" />
         <title>{{ _.title|default('') }}</title>
         <link rel="stylesheet" type="text/css" href="/src/css/parsley-lite.css" />
+        <link rel="icon" type="image/x-icon" href="{{ _.favicon|default('/favicon.ico') }}" />
+        {% if _.icon is defined %}
+            <link rel="icon" type="image/png" href="{{ _.icon }}" />
+            <link rel="apple-touch-icon" href="{{ _.icon }}" />
+        {% endif %}
         {% if og is defined %}
             <meta property="og:title" content="{{ og.title|default(_.title|default('')) }}" /> 
             <meta property="og:type" content="{{ og.type|default('website'） }}" />
