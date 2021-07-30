@@ -1,8 +1,13 @@
 <?php
 /*
+Parsley Lite Project
 
-File seq
+mini-skirt@outlook.com
+github.com/mini-skirt
 
+
+
+# File life-time load sequence
 /public/index.php -> /bootstrap/init.php {
     req /vendor/autoload.php
     req /config.php
@@ -10,12 +15,22 @@ File seq
     req /route.php
 }
 
+# Code content description
+A. Load dependecies and autoloader
+B. Define base functions
+C. Load and init configs
+D. Setup container and dependencies
+
 */
 
+
+
+// #A  Load dependencies and autoloader
 require __DIR__ . '/../vendor/autoload.php';
 
 
-// Base functions
+
+// #B  Define base functions
 function app()
 {
     return \App\AppState::getInstance();
@@ -28,7 +43,7 @@ function project_path()
 
 
 
-// Config
+// #C  Load and init configs
 $config = require project_path().'/config.php';
 
 if (is_file(project_path().'/config.secret.php')) {
@@ -42,7 +57,7 @@ if ($config_secret === 1 or $config === false) $config_secret = [];
 
 
 
-// Dependency
+// #D  Setup container and dependencies
 $container = new \DI\Container;
 
 \Slim\Factory\AppFactory::setContainer($container);
