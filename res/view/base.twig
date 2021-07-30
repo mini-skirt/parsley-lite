@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html{% if _.lang is defined %} lang="{{ _.lang }}"{% endif %}>
     <head>
     {% block head %}
-        <meta charset="utf-8" />
-        <title>{{ doc_title|default('') }}</title>
+        <meta charset="{{ _.charset|default('utf-8') }}" />
+        <title>{{ _.title|default('') }}</title>
         <link rel="stylesheet" type="text/css" href="/src/css/parsley-lite.css" />
     {% endblock %}
     </head>
