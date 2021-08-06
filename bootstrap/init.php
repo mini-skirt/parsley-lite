@@ -33,7 +33,7 @@ require __DIR__ . '/../vendor/autoload.php';
 // #B  Define base functions
 function app()
 {
-    return \App\AppState::getInstance();
+    return \App\State::getInstance();
 }
 
 function project_path()
@@ -69,7 +69,7 @@ $container->set('view', function() use ($config) {
     );
 });
 
-\App\AppState::setInstance(AppFactory::create());
+\App\State::setInstance(\Slim\Factory\AppFactory::create());
 
 app()->add(\Slim\Views\TwigMiddleware::createFromContainer(app()));
 
