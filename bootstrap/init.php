@@ -1,4 +1,6 @@
 <?php
+namespace MiniSkirt\ParsleyLite;
+
 /*
 Parsley Lite Project
 
@@ -28,19 +30,8 @@ D. Setup container and dependencies
 // #A  Load dependencies and autoloader
 require __DIR__ . '/../vendor/autoload.php';
 
-
-
-// #B  Define base functions
-function app()
-{
-    return \App\State::getInstance();
-}
-
-function project_path()
-{
-    return dirname(__DIR__);
-}
-
+// #B  Load base functions
+require 'fn.php';
 
 
 // #C  Load and init configs
@@ -60,14 +51,14 @@ if ($config_secret === 1 or $config === false) $config_secret = [];
 // #D  Setup container and dependencies
 $container = new \DI\Container;
 
-\Slim\Factory\AppFactory::setContainer($container);
-
-$container->set('view', function() use ($config) {
+$container->set('view', function ($container) use ($config) {
     return \Slim\Views\Twig::create(
         $config['dependency']['twig']['view'], 
         ['cache' => $config['dependency']['twig']['cache']]
     );
 });
+
+\Slim\Factory\AppFactory::setContainer($container);
 
 \App\State::setInstance(\Slim\Factory\AppFactory::create());
 

@@ -1,4 +1,5 @@
 <?php
+namespace MiniSkirt\ParsleyLite;
 
 return [
     'dependency' => [
