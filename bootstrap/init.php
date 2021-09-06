@@ -12,9 +12,10 @@ github.com/mini-skirt
 # File life-time load sequence
 /public/index.php -> /bootstrap/init.php {
     req /vendor/autoload.php
+    req ./fn.php
     req /config.php
     req /config.secret.php
-    req /route.php
+    req ./route.php
 }
 
 # Code content description
